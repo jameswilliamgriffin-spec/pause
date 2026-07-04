@@ -1,9 +1,12 @@
 import Image from "next/image";
+import Sprinkles from "@/components/Sprinkles";
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-brand">
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-10 sm:px-6">
+    <footer className="relative bg-white text-brand">
+      {/* Faint brand texture to close the page in the packaging language */}
+      <Sprinkles className="opacity-[0.07]" />
+      <div className="relative mx-auto flex max-w-6xl items-center gap-4 px-4 py-10 sm:px-6">
         <Image
           src="/images/pause_blue.svg"
           alt="pause."

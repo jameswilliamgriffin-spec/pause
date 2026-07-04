@@ -75,6 +75,15 @@ html {
   }
 }
 
+/* Theme-flip radial wipe (see ThemeToggle.tsx): the toggle animates
+   ::view-transition-new(root) with an expanding clip-path circle, so the
+   default cross-fade must be disabled. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 /* Brand text selection (flips with the theme) */
 ::selection {
   background: var(--pause-ink);

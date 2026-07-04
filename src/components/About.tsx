@@ -1,5 +1,6 @@
 import { RevealGroup, RevealItem } from "@/components/Reveal";
 import Section from "@/components/Section";
+import Sprinkles from "@/components/Sprinkles";
 
 /**
  * ABOUT — sits directly below the hero. Blue pull-quote statement, then the
@@ -14,8 +15,10 @@ const owners =
 
 export default function About() {
   return (
-    <Section id="about" className="py-20 sm:py-28">
-      <RevealGroup className="mx-auto flex max-w-3xl flex-col gap-10 text-center sm:gap-12">
+    <Section id="about" className="relative py-20 sm:py-28">
+      {/* Faint brand texture behind the statement */}
+      <Sprinkles className="opacity-[0.05]" />
+      <RevealGroup className="relative mx-auto flex max-w-3xl flex-col gap-10 text-center sm:gap-12">
         <RevealItem>
           <p className="text-balance text-3xl font-medium leading-tight tracking-tight text-brand sm:text-4xl">
             {statement}
