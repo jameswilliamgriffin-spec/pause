@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 const WORDS = [
@@ -30,11 +29,9 @@ const WORDS = [
   "peace.",
 ];
 
-const LOGO_HOLD_MS = 2000;
 const WORD_HOLD_MS = 3200;
 const CONTROL_TRANSITION = { duration: 0.08, ease: "easeOut" } as const;
 const SURFACE_TRANSITION = { duration: 0.14, ease: [0.22, 1, 0.36, 1] } as const;
-const LOGO_TRANSITION = { duration: 0.28, ease: [0.22, 1, 0.36, 1] } as const;
 const WORD_TRANSITION = { duration: 0.7, ease: "easeOut" } as const;
 const WORD_EXIT_TRANSITION = { duration: 0.6 } as const;
 
@@ -79,10 +76,8 @@ function PlayIcon() {
 
 export default function HeroWordmark() {
   const reduceMotion = useReducedMotion();
-  const [showLogo, setShowLogo] = useState(true);
   const [wordIndex, setWordIndex] = useState(0);
   const [words, setWords] = useState<string[]>(() => shuffledWords());
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [clickPulse, setClickPulse] = useState({ id: 0, inverted: false });
@@ -93,12 +88,6 @@ export default function HeroWordmark() {
 
   useEffect(() => {
     if (isPaused) return;
-    const timeout = window.setTimeout(() => setShowLogo(false), LOGO_HOLD_MS);
-    return () => window.clearTimeout(timeout);
-  }, [isPaused]);
-
-  useEffect(() => {
-    if (showLogo || isPaused) return;
 
     const interval = window.setInterval(() => {
       setWordIndex((currentIndex) => {
@@ -111,10 +100,10 @@ export default function HeroWordmark() {
     }, WORD_HOLD_MS);
 
     return () => window.clearInterval(interval);
-  }, [isPaused, showLogo, words]);
+  }, [isPaused, words]);
 
   const currentWord = words[wordIndex];
-  const isControlVisible = !showLogo && (isPaused || isHovered);
+  const isControlVisible = isPaused || isHovered;
 
   const wordSizeClass = useMemo(() => {
     if (currentWord.length >= 10) return "text-[1.45rem] sm:text-[1.95rem]";
@@ -126,8 +115,8 @@ export default function HeroWordmark() {
     <motion.button
       type="button"
       className="pointer-events-auto relative aspect-square w-32 appearance-none rounded-full border-0 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-44"
-      whileHover={reduceMotion || showLogo ? undefined : { scale: 1.025 }}
-      whileTap={reduceMotion || showLogo ? undefined : { scale: 0.985 }}
+      whileHover={reduceMotion ? undefined : { scale: 1.025 }}
+      whileTap={reduceMotion ? undefined : { scale: 0.985 }}
       transition={SURFACE_TRANSITION}
       aria-label={
         isPaused
@@ -135,45 +124,24 @@ export default function HeroWordmark() {
           : "Pause hero word animation"
       }
       aria-pressed={isPaused}
-      onMouseEnter={() => {
-        if (showLogo) {
-          setIsLogoHovered(true);
-        } else {
-          setIsHovered(true);
-        }
-      }}
-      onMouseLeave={() => {
-        setIsLogoHovered(false);
-        setIsHovered(false);
-      }}
-      onFocus={() => {
-        if (showLogo) setIsLogoHovered(true);
-      }}
-      onBlur={() => {
-        setIsLogoHovered(false);
-        setIsHovered(false);
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onBlur={() => setIsHovered(false)}
       onClick={() => {
-        if (!showLogo) {
-          setIsPaused((current) => {
-            const nextPaused = !current;
-            if (!nextPaused) setIsHovered(false);
-            setClickPulse((pulse) => ({
-              id: pulse.id + 1,
-              inverted: nextPaused,
-            }));
-            return nextPaused;
-          });
-        }
+        setIsPaused((current) => {
+          const nextPaused = !current;
+          if (!nextPaused) setIsHovered(false);
+          setClickPulse((pulse) => ({
+            id: pulse.id + 1,
+            inverted: nextPaused,
+          }));
+          return nextPaused;
+        });
       }}
     >
       <motion.div
         className={`absolute inset-0 rounded-full transition-colors duration-150 ${
-          showLogo
-            ? "bg-transparent"
-            : isControlVisible
-              ? "bg-white"
-              : "bg-brand"
+          isControlVisible ? "bg-white" : "bg-brand"
         }`}
       />
       <AnimatePresence>
@@ -197,49 +165,12 @@ export default function HeroWordmark() {
           isControlVisible ? "text-brand" : "text-white"
         }`}
       >
-        <AnimatePresence>
-          {showLogo && (
-            <motion.div
-              key="pause-logo"
-              className="absolute inset-0"
-              initial={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-              animate={{
-                opacity: 1,
-                filter: "blur(0px)",
-                scale: isLogoHovered && !reduceMotion ? 1.035 : 1,
-                transition: reduceMotion ? { duration: 0 } : LOGO_TRANSITION,
-              }}
-              exit={{
-                opacity: 0,
-                filter: "blur(2px)",
-                scale: 0.98,
-                transition: reduceMotion ? { duration: 0 } : LOGO_TRANSITION,
-              }}
-            >
-              <Image
-                src="/images/pause_blue.svg"
-                alt=""
-                width={180}
-                height={180}
-                priority
-                className="h-auto w-full transition-[filter] duration-200 ease-[var(--pause-ease)]"
-                style={{
-                  filter: isLogoHovered
-                    ? "drop-shadow(0 0 18px rgba(0, 0, 186, 0.28))"
-                    : "drop-shadow(0 0 0 rgba(0, 0, 186, 0))",
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {!showLogo && (
-          <div
-            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-75 ${
-              isControlVisible ? "opacity-0" : "opacity-100"
-            }`}
-            aria-hidden={isControlVisible}
-          >
+        <div
+          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-75 ${
+            isControlVisible ? "opacity-0" : "opacity-100"
+          }`}
+          aria-hidden={isControlVisible}
+        >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentWord}
@@ -272,11 +203,10 @@ export default function HeroWordmark() {
                 </span>
               </motion.div>
             </AnimatePresence>
-          </div>
-        )}
+        </div>
 
         <AnimatePresence>
-          {isHovered && !isPaused && !showLogo && (
+          {isHovered && !isPaused && (
             <motion.div
               key="pause-icon"
               className="absolute inset-0 flex items-center justify-center"
@@ -288,7 +218,7 @@ export default function HeroWordmark() {
             </motion.div>
           )}
 
-          {isPaused && !showLogo && (
+          {isPaused && (
             <motion.div
               key="play-icon"
               className="absolute inset-0 flex items-center justify-center"
