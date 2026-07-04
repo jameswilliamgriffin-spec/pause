@@ -21,13 +21,18 @@ export default function NeighbourhoodSection() {
   const imageY = useTransform(
     scrollYProgress,
     [0, 1],
-    prefersReducedMotion ? [0, 0] : [-16, 16],
+    prefersReducedMotion ? [0, 0] : [-46, 46],
   );
   /* Circle drifts counter to the image for a little depth */
   const circleY = useTransform(
     scrollYProgress,
     [0, 1],
-    prefersReducedMotion ? [0, 0] : [34, -34],
+    prefersReducedMotion ? [0, 0] : [56, -56],
+  );
+  const circleX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [18, -18],
   );
 
   return (
@@ -38,9 +43,9 @@ export default function NeighbourhoodSection() {
       <motion.div
         aria-hidden
         className="pointer-events-none absolute right-[-18rem] top-1/2 lg:right-[-22rem]"
-        style={{ y: circleY }}
+        style={{ x: circleX, y: circleY }}
       >
-        <div className="size-[34rem] -translate-y-1/2 rounded-full bg-brand opacity-[0.06] sm:size-[42rem] lg:size-[50rem]" />
+        <div className="size-[34rem] -translate-y-1/2 rounded-full bg-brand opacity-[0.08] sm:size-[42rem] lg:size-[50rem]" />
       </motion.div>
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.45fr_0.55fr] lg:gap-16">
@@ -121,7 +126,7 @@ export default function NeighbourhoodSection() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.div
-            className="absolute inset-x-0 -inset-y-3"
+            className="absolute inset-x-0 -inset-y-16"
             style={{ y: imageY }}
           >
             <Image

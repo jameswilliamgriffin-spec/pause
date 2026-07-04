@@ -27,7 +27,7 @@ export default function About() {
   const patternY = useTransform(
     scrollYProgress,
     [0, 1],
-    prefersReducedMotion ? [0, 0] : [-22, 22],
+    prefersReducedMotion ? [0, 0] : [-54, 54],
   );
 
   return (
@@ -38,10 +38,10 @@ export default function About() {
           scroll. Overscanned vertically so the travel never exposes edges. */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 -inset-y-10"
+        className="pointer-events-none absolute inset-x-0 -inset-y-24"
         style={{ y: patternY }}
       >
-        <Sprinkles className="opacity-[0.05]" />
+        <Sprinkles className="about-sprinkles" />
       </motion.div>
       <RevealGroup className="relative mx-auto flex max-w-3xl flex-col gap-10 text-center sm:gap-12">
         <RevealItem>

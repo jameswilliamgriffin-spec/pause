@@ -84,7 +84,14 @@ function PlayIcon() {
 export default function HeroWordmark() {
   const reduceMotion = useReducedMotion();
   const [wordIndex, setWordIndex] = useState(0);
-  const [words, setWords] = useState<string[]>(() => shuffledWords());
+  /* Deterministic first render (server and client must match — random
+     shuffling here caused hydration mismatches); shuffle the tail after
+     mount so the visible first word never changes. */
+  const [words, setWords] = useState<string[]>(WORDS);
+
+  useEffect(() => {
+    setWords((current) => [current[0], ...shuffledWords(current[0]).filter((w) => w !== current[0])]);
+  }, []);
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [clickPulse, setClickPulse] = useState({ id: 0, inverted: false });

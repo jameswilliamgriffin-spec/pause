@@ -50,49 +50,12 @@ export default function Footer() {
       {/* Faint brand texture to close the page in the packaging language */}
       <Sprinkles className="opacity-[0.07]" />
       <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-        {/* Sign-off */}
-        <p className="text-3xl font-medium tracking-tight sm:text-4xl">
-          pause. <span className="text-brand/60">take yours.</span>
-        </p>
-
-        <div className="mt-10 grid gap-10 sm:mt-14 sm:grid-cols-3">
-          {/* Brand */}
+        <div className="grid gap-10 sm:grid-cols-3">
+          {/* Sign-off */}
           <div>
-            <Image
-              src="/images/pause_blue.svg"
-              alt="pause."
-              width={44}
-              height={44}
-            />
-            <p className="mt-4 max-w-[28ch] text-sm leading-relaxed text-brand/80">
-              Speciality coffee shop &amp; scratch bakery in Kings Heath,
-              Birmingham. Home of the Cinnabuffin.
+            <p className="text-3xl font-medium tracking-tight sm:text-4xl">
+              pause. <span className="text-brand/60">take yours.</span>
             </p>
-          </div>
-
-          {/* Visit */}
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand/70">
-              Visit
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-brand/80">
-              56 Poplar Rd, King&apos;s Heath,
-              <br />
-              Birmingham B14 7AG
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-brand/80">
-              Mon-Fri 8am-4pm
-              <br />
-              Sat &amp; Sun 9am-3pm
-            </p>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Pause%2C+56+Poplar+Rd%2C+King%27s+Heath%2C+Birmingham+B14+7AG"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-block text-sm underline underline-offset-4 transition-opacity hover:opacity-70"
-            >
-              Open in Google Maps
-            </a>
           </div>
 
           {/* Say hello */}
@@ -116,6 +79,20 @@ export default function Footer() {
               <MailIcon />
               hello@pausebirmingham.co.uk
             </a>
+          </div>
+
+          {/* Brand */}
+          <div>
+            <Image
+              src="/images/pause_blue.svg"
+              alt="pause."
+              width={44}
+              height={44}
+            />
+            <p className="mt-4 max-w-[28ch] text-sm leading-relaxed text-brand/80">
+              Speciality coffee shop &amp; scratch bakery in Kings Heath,
+              Birmingham. Home of the Cinnabuffin.
+            </p>
           </div>
         </div>
 
