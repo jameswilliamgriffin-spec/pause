@@ -64,8 +64,10 @@ export default function Baked() {
     <section id="baked" className="scroll-mt-16 overflow-x-clip py-20 sm:py-24">
       <RevealGroup>
         <RevealItem className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <h2 className="text-4xl font-medium tracking-tight text-brand sm:text-5xl">
-            Home of the Cinnabuffin.
+          <h2 className="max-w-[12ch] text-5xl font-medium leading-[0.98] tracking-tight text-brand sm:text-6xl lg:text-7xl">
+            Home of the
+            <br />
+            Cinnabuffin.
           </h2>
           <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-brand sm:text-lg">
             Made from scratch, by hand, every day — that&apos;s the whole

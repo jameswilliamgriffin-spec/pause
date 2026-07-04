@@ -4,13 +4,13 @@
   <defs>
     <style>
       .st0 {
-        fill: #0000ba;
+        fill: none;
       }
 
       .st0, .st1 {
-        stroke: #fff;
+        stroke: #0000ba;
         stroke-miterlimit: 10;
-        stroke-width: 7px;
+        stroke-width: 3px;
       }
 
       .st1 {

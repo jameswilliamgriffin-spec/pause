@@ -147,11 +147,7 @@ export default function HeroWordmark() {
         setIsHovered(false);
       }}
       onFocus={() => {
-        if (showLogo) {
-          setIsLogoHovered(true);
-        } else {
-          setIsHovered(true);
-        }
+        if (showLogo) setIsLogoHovered(true);
       }}
       onBlur={() => {
         setIsLogoHovered(false);
@@ -161,6 +157,7 @@ export default function HeroWordmark() {
         if (!showLogo) {
           setIsPaused((current) => {
             const nextPaused = !current;
+            if (!nextPaused) setIsHovered(false);
             setClickPulse((pulse) => ({
               id: pulse.id + 1,
               inverted: nextPaused,

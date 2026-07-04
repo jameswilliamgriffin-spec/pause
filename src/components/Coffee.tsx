@@ -63,8 +63,10 @@ export default function Coffee() {
     <section id="coffee" className="scroll-mt-16 py-24 sm:py-32">
       <RevealGroup>
         <RevealItem className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <h2 className="text-4xl font-medium tracking-tight text-brand sm:text-5xl">
-            Coffee, taken seriously.
+          <h2 className="max-w-[10ch] text-5xl font-medium leading-[0.98] tracking-tight text-brand sm:text-6xl lg:text-7xl">
+            Coffee,
+            <br />
+            taken seriously.
           </h2>
           <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-brand sm:text-lg">
             We feature beans from some of the UK&apos;s best speciality roasters —

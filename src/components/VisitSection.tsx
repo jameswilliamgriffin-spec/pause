@@ -9,10 +9,8 @@
  * GIFs and can strip the animation.
  */
 const hours = [
-  ["Mon–Thu", "8am–4pm"],
-  ["Fri", "8am–4pm"],
-  ["Sat", "9am–3pm"],
-  ["Sun", "9am–3pm"],
+  ["Mon-Fri", "8am-4pm"],
+  ["Sat & Sun", "9am-3pm"],
 ] as const;
 
 /*
@@ -21,6 +19,25 @@ const hours = [
  * inline SVG so it needs no asset request.
  */
 const sprinkles = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg stroke='%23fff' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='20' y1='12' x2='30' y2='22'/%3E%3Cline x1='70' y1='8' x2='60' y2='20'/%3E%3Cline x1='120' y1='18' x2='132' y2='10'/%3E%3Cline x1='12' y1='60' x2='12' y2='74'/%3E%3Cline x1='48' y1='52' x2='60' y2='44'/%3E%3Cline x1='95' y1='55' x2='105' y2='67'/%3E%3Cline x1='140' y1='60' x2='150' y2='50'/%3E%3Cline x1='30' y1='100' x2='42' y2='96'/%3E%3Cline x1='80' y1='92' x2='80' y2='106'/%3E%3Cline x1='118' y1='100' x2='130' y2='110'/%3E%3Cline x1='20' y1='140' x2='32' y2='132'/%3E%3Cline x1='65' y1='132' x2='55' y2='144'/%3E%3Cline x1='105' y1='140' x2='117' y2='146'/%3E%3Cline x1='145' y1='128' x2='145' y2='142'/%3E%3C/g%3E%3C/svg%3E")`;
+
+function MailIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
 
 export default function VisitSection() {
   return (
@@ -85,6 +102,13 @@ export default function VisitSection() {
                   </li>
                 ))}
               </ul>
+              <a
+                href="mailto:hello@pausebirmingham.co.uk"
+                className="mt-5 inline-flex items-center gap-2 text-[1.0625rem] font-medium text-white underline underline-offset-4 transition-opacity hover:opacity-70 sm:text-lg"
+              >
+                <MailIcon />
+                Contact us
+              </a>
             </div>
           </div>
         </div>

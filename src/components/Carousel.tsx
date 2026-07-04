@@ -46,6 +46,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
 
   const onPointerDown = (event: PointerEvent<HTMLUListElement>) => {
     if (!scrollerRef.current) return;
+    if (event.pointerType === "touch") return;
     if (event.target instanceof Element && event.target.closest("button")) return;
 
     dragState.current = {
@@ -60,6 +61,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
   };
 
   const onPointerMove = (event: PointerEvent<HTMLUListElement>) => {
+    if (event.pointerType === "touch") return;
     if (!dragState.current.isPointerDown || !scrollerRef.current) return;
 
     const delta = event.clientX - dragState.current.startX;
@@ -68,6 +70,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
   };
 
   const endDrag = (event: PointerEvent<HTMLUListElement>) => {
+    if (event.pointerType === "touch") return;
     const scroller = scrollerRef.current;
     if (!scroller) return;
     if (scroller.hasPointerCapture(event.pointerId)) {
@@ -121,7 +124,8 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
         paddingRight: edgePad,
         scrollPaddingLeft: edgePad,
         scrollBehavior: isDragging ? "auto" : "smooth",
-        touchAction: "pan-y",
+        WebkitOverflowScrolling: "touch",
+        touchAction: "pan-x pan-y",
       }}
     >
       {items.map((item, i) => {

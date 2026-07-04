@@ -23,7 +23,7 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkColor = scrolled ? "text-brand" : "text-white";
+  const linkColor = scrolled ? "text-brand" : "text-[#fff]";
 
   return (
     <header
@@ -32,7 +32,7 @@ export default function Nav() {
       }`}
     >
       <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between px-4 transition-[height] duration-500 ease-out sm:px-6 ${
+        className={`relative mx-auto flex max-w-6xl items-center justify-between px-4 transition-[height] duration-500 ease-out sm:px-6 ${
           scrolled ? "h-16" : "h-20 sm:h-24"
         }`}
       >
@@ -52,7 +52,9 @@ export default function Nav() {
             priority
           />
         </Link>
-        <ul className="flex items-center gap-4 sm:gap-10">
+        {/* Mobile: links centred in the bar (absolute); desktop: pushed right
+            beside the actions via ml-auto */}
+        <ul className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 sm:static sm:ml-auto sm:mr-10 sm:translate-x-0 sm:translate-y-0 sm:gap-10">
           {links.map((link) => (
             <li key={link.href}>
               <a
@@ -63,33 +65,31 @@ export default function Nav() {
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href="https://www.instagram.com/pausebirmingham"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Pause on Instagram"
-              className={`block opacity-80 transition-opacity hover:opacity-100 ${linkColor}`}
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                aria-hidden
-              >
-                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
-                <circle cx="12" cy="12" r="4.5" />
-                <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-          </li>
-          <li className={`flex items-center ${linkColor}`}>
-            <ThemeToggle />
-          </li>
         </ul>
+        <div className={`flex items-center gap-4 sm:gap-5 ${linkColor}`}>
+          <a
+            href="https://www.instagram.com/pausebirmingham"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Pause on Instagram"
+            className="block opacity-80 transition-opacity hover:opacity-100"
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              aria-hidden
+            >
+              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+              <circle cx="12" cy="12" r="4.5" />
+              <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   );

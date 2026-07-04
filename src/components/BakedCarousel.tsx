@@ -35,6 +35,8 @@ export default function BakedCarousel({ items }: { items: BakedItem[] }) {
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (!scrollerRef.current) return;
+    if (event.pointerType === "touch") return;
+
     dragState.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -46,6 +48,7 @@ export default function BakedCarousel({ items }: { items: BakedItem[] }) {
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") return;
     if (!isDragging || !scrollerRef.current) return;
     const delta = event.clientX - dragState.current.startX;
     if (Math.abs(delta) > 6) dragState.current.moved = true;
@@ -53,6 +56,7 @@ export default function BakedCarousel({ items }: { items: BakedItem[] }) {
   };
 
   const endDrag = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") return;
     if (!scrollerRef.current) return;
     if (scrollerRef.current.hasPointerCapture(event.pointerId)) {
       scrollerRef.current.releasePointerCapture(event.pointerId);
@@ -73,7 +77,10 @@ export default function BakedCarousel({ items }: { items: BakedItem[] }) {
       className={`overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
         isDragging ? "cursor-grabbing select-none" : "cursor-grab"
       }`}
-      style={{ touchAction: "pan-y" }}
+      style={{
+        WebkitOverflowScrolling: "touch",
+        touchAction: "pan-x pan-y",
+      }}
     >
       <ul
         className="flex w-max items-stretch gap-2 will-change-transform"
@@ -88,7 +95,7 @@ export default function BakedCarousel({ items }: { items: BakedItem[] }) {
             <li
               key={`${item.title}-${i}`}
               aria-hidden={i >= items.length}
-              className="h-80 shrink-0 sm:h-[520px]"
+              className="h-[23rem] shrink-0 sm:h-[520px]"
             >
               <button
                 type="button"

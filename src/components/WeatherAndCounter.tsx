@@ -113,8 +113,8 @@ function HeartIcon() {
  * Wiring them to a real source is an open item in source/site-brief.md.
  */
 const stats = [
-  { label: "Coffees served this week", value: 487, Icon: CoffeeIcon },
-  { label: "Sweet treats", value: 132, Icon: CakeIcon },
+  { label: "Coffees served this week", value: 256, Icon: CoffeeIcon },
+  { label: "Bakes created", value: 132, Icon: CakeIcon },
   {
     label: "People who stayed longer than planned",
     value: "Unknown",
@@ -128,7 +128,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
     return (
       <div className="flex h-24 items-center">
         <div
-          className="size-20 rounded-full bg-brand"
+          className="size-20 rounded-full bg-current"
           style={{ animation: "pause-pulse 3s ease-in-out infinite" }}
         />
       </div>
@@ -173,13 +173,13 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
               className="block h-3.5 w-[1.5px]"
               style={{
                 background:
-                  "linear-gradient(to bottom, rgba(0,0,186,0), rgba(0,0,186,0.75))",
+                  "linear-gradient(to bottom, transparent, currentColor)",
                 animation: `pause-stem ${duration}s linear infinite`,
                 animationDelay: `${delay}s`,
               }}
             />
             <span
-              className="block h-1.5 w-[10px] rounded-[50%] border-t-2 border-dotted border-brand/60"
+              className="block h-1.5 w-[10px] rounded-[50%] border-t-2 border-dotted border-current opacity-70"
               style={{
                 animation: `pause-splat ${duration}s linear infinite`,
                 animationDelay: `${delay}s`,
@@ -197,7 +197,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
         {[0, 1, 2, 3, 4].map((i) => (
           <span
             key={i}
-            className="size-2 rounded-full bg-brand"
+            className="size-2 rounded-full bg-current"
             style={{
               animation: "pause-snow 2.6s linear infinite",
               animationDelay: `${i * 0.45}s`,
@@ -218,7 +218,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
         ].map((streak, i) => (
           <span
             key={i}
-            className="h-[3px] rounded-full bg-brand"
+            className="h-[3px] rounded-full bg-current"
             style={{
               width: streak.width,
               animation: `pause-wind ${streak.duration}s ease-in-out infinite`,
@@ -234,13 +234,15 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
     return (
       <div className="flex h-20 flex-col justify-center gap-2">
         {[
-          { width: "6rem", opacity: "bg-brand/40", duration: 9 },
-          { width: "7.5rem", opacity: "bg-brand/25", duration: 12 },
-          { width: "5rem", opacity: "bg-brand/30", duration: 10 },
+          { width: "6rem", opacity: "opacity-45", duration: 9 },
+          { width: "7.5rem", opacity: "opacity-30", duration: 12 },
+          { width: "5rem", opacity: "opacity-35", duration: 10 },
         ].map((bar, i) => (
           <span
             key={i}
-            className={`h-2 rounded-full ${bar.opacity} ${i === 1 ? "ml-4" : ""}`}
+            className={`h-2 rounded-full bg-current ${bar.opacity} ${
+              i === 1 ? "ml-4" : ""
+            }`}
             style={{
               width: bar.width,
               animation: `pause-drift ${bar.duration}s ease-in-out infinite ${
@@ -259,7 +261,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
         {[0, 1, 2, 3, 4].map((i) => (
           <span
             key={i}
-            className="h-4 w-[3px] rounded-full bg-brand"
+            className="h-4 w-[3px] rounded-full bg-current"
             style={{
               animation: "pause-fall 1.3s linear infinite",
               animationDelay: `${i * 0.22}s`,
@@ -271,7 +273,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
           height="26"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="ml-2 text-brand"
+          className="ml-2"
           style={{ animation: "pause-flash 3.4s linear infinite" }}
           aria-hidden
         >
@@ -286,7 +288,7 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
       {/* top-0 anchors the crown, so growing the dot expands it down behind
           the clouds rather than higher above them */}
       <span
-        className="absolute right-5 top-0 size-18 rounded-full bg-brand"
+        className="absolute right-5 top-0 size-18 rounded-full bg-current"
         style={{ animation: "pause-bob 3.2s ease-in-out infinite" }}
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -371,15 +373,15 @@ export default function WeatherAndCounter() {
     <section className="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
       <div className="grid gap-6 sm:grid-cols-2">
         {/* Weather widget */}
-        <div className="flex flex-col justify-between gap-10 border border-brand/15 p-8 sm:p-10">
-          <p className="text-sm font-medium tracking-[0.2em] text-brand/60">
+        <div className="flex flex-col justify-between gap-10 bg-brand p-8 text-white sm:p-10">
+          <p className="text-sm font-medium tracking-[0.2em] text-white/70">
             BIRMINGHAM, RIGHT NOW
             {temperature !== null && (
-              <span className="text-brand"> — {Math.round(temperature)}°C</span>
+              <span className="text-white"> — {Math.round(temperature)}°C</span>
             )}
           </p>
           <WeatherAnimation state={state} />
-          <p className="text-3xl font-medium tracking-tight text-brand sm:text-3xl">
+          <p className="text-3xl font-medium tracking-tight text-white sm:text-3xl">
             {weatherCopy[state]}
           </p>
         </div>

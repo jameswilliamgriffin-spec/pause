@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /**
  * Super-minimal invert toggle: a bordered pill with a sliding dot, drawn in
@@ -9,11 +9,11 @@ import { useEffect, useState } from "react";
  * persists in localStorage; layout.tsx applies the stored theme pre-paint.
  */
 export default function ThemeToggle({ className = "" }: { className?: string }) {
-  const [inverted, setInverted] = useState(false);
-
-  useEffect(() => {
-    setInverted(document.documentElement.dataset.theme === "inverted");
-  }, []);
+  const [inverted, setInverted] = useState(
+    () =>
+      typeof document !== "undefined" &&
+      document.documentElement.dataset.theme === "inverted",
+  );
 
   const toggle = () => {
     const next = !inverted;
@@ -37,11 +37,11 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       aria-checked={inverted}
       aria-label="Invert site colours"
       onClick={toggle}
-      className={`relative h-5 w-9 rounded-full border border-current transition-opacity hover:opacity-70 ${className}`}
+      className={`relative h-6 w-11 rounded-full border border-current transition-opacity hover:opacity-70 ${className}`}
     >
       <span
-        className={`absolute top-1/2 size-2.5 -translate-y-1/2 rounded-full bg-current transition-[left] duration-[var(--pause-duration)] ease-[var(--pause-ease)] ${
-          inverted ? "left-[1.375rem]" : "left-1"
+        className={`absolute top-1/2 size-3 -translate-y-1/2 rounded-full bg-current transition-[left] duration-[var(--pause-duration)] ease-[var(--pause-ease)] ${
+          inverted ? "left-7" : "left-1"
         }`}
       />
     </button>
