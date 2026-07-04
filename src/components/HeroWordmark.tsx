@@ -30,7 +30,14 @@ const WORDS = [
 ];
 
 const WORD_HOLD_MS = 3200;
-const CONTROL_TRANSITION = { duration: 0.08, ease: "easeOut" } as const;
+/*
+ * Hover pause/play feel: one shared duration drives the word→icon
+ * crossfade and the surface colour change, so entering/leaving reads as a
+ * smooth decelerate/accelerate rather than a snap.
+ * Preview other timings with ?hover=300|500|800 (ms) before locking one in.
+ */
+const DEFAULT_HOVER_MS = 500;
+const HOVER_EASE = [0.22, 1, 0.36, 1] as const;
 const SURFACE_TRANSITION = { duration: 0.14, ease: [0.22, 1, 0.36, 1] } as const;
 const WORD_TRANSITION = { duration: 0.7, ease: "easeOut" } as const;
 const WORD_EXIT_TRANSITION = { duration: 0.6 } as const;
@@ -81,10 +88,25 @@ export default function HeroWordmark() {
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [clickPulse, setClickPulse] = useState({ id: 0, inverted: false });
+  const [hoverMs, setHoverMs] = useState(DEFAULT_HOVER_MS);
+
+  useEffect(() => {
+    /* Timing preview: ?hover=300|500|800 */
+    const raw = new URLSearchParams(window.location.search).get("hover");
+    const parsed = Number(raw);
+    if (raw && Number.isFinite(parsed)) {
+      setHoverMs(Math.min(1200, Math.max(150, parsed)));
+    }
+  }, []);
 
   const controlTransition = reduceMotion
     ? { duration: 0 }
-    : CONTROL_TRANSITION;
+    : { duration: hoverMs / 1000, ease: HOVER_EASE };
+  /* Matching CSS transition for the colour/opacity layers */
+  const hoverStyle = {
+    transitionDuration: `${reduceMotion ? 0 : hoverMs}ms`,
+    transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+  };
 
   useEffect(() => {
     if (isPaused) return;
@@ -140,9 +162,10 @@ export default function HeroWordmark() {
       }}
     >
       <motion.div
-        className={`absolute inset-0 rounded-full transition-colors duration-150 ${
+        className={`absolute inset-0 rounded-full transition-colors ${
           isControlVisible ? "bg-white" : "bg-brand"
         }`}
+        style={hoverStyle}
       />
       <AnimatePresence>
         {!reduceMotion && clickPulse.id > 0 && (
@@ -161,14 +184,18 @@ export default function HeroWordmark() {
       </AnimatePresence>
 
       <div
-        className={`absolute inset-0 flex items-center justify-center overflow-hidden rounded-full transition-colors duration-150 ${
+        className={`absolute inset-0 flex items-center justify-center overflow-hidden rounded-full transition-colors ${
           isControlVisible ? "text-brand" : "text-white"
         }`}
+        style={hoverStyle}
       >
         <div
-          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-75 ${
-            isControlVisible ? "opacity-0" : "opacity-100"
+          className={`absolute inset-0 flex items-center justify-center transition-[opacity,filter,transform] ${
+            isControlVisible
+              ? "scale-[0.94] opacity-0 blur-[3px]"
+              : "scale-100 opacity-100 blur-0"
           }`}
+          style={hoverStyle}
           aria-hidden={isControlVisible}
         >
             <AnimatePresence mode="wait" initial={false}>
@@ -210,9 +237,9 @@ export default function HeroWordmark() {
             <motion.div
               key="pause-icon"
               className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.88 }}
               animate={{ opacity: 1, scale: 1, transition: controlTransition }}
-              exit={{ opacity: 0, scale: 0.96, transition: controlTransition }}
+              exit={{ opacity: 0, scale: 0.88, transition: controlTransition }}
             >
               <PauseIcon />
             </motion.div>
@@ -222,9 +249,9 @@ export default function HeroWordmark() {
             <motion.div
               key="play-icon"
               className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.88 }}
               animate={{ opacity: 1, scale: 1, transition: controlTransition }}
-              exit={{ opacity: 0, scale: 0.96, transition: controlTransition }}
+              exit={{ opacity: 0, scale: 0.88, transition: controlTransition }}
             >
               <PlayIcon />
             </motion.div>
