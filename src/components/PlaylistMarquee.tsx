@@ -7,13 +7,57 @@ import Image from "next/image";
  * bounces its album artwork in just above the text. Rows never pause — a
  * hover-pause here made the loop look broken.
  *
- * PLACEHOLDER CONTENT — swap when the real Pause playlist is confirmed:
- * - Song titles below are stand-ins (the intended playlist list never reached
- *   me — paste it and I'll swap these).
- * - Artwork = generated abstract covers in /public/images/albums/.
- * - SPOTIFY_URL is a dummy link.
+ * Artwork: real covers live in /public/images/albums/*.jpg (400×400, from
+ * /images/albumthumb), matched to artists via the covers map below. Artists
+ * without a cover yet fall back to the generated abstract SVGs.
+ *
+ * PLACEHOLDER: SPOTIFY_URL is still a dummy link.
  */
 const SPOTIFY_URL = "https://open.spotify.com/playlist/REPLACE_WITH_PAUSE_PLAYLIST";
+
+/* Artist → cover file. Missing (no artwork supplied yet): YUSSEF DAYES,
+   KOKOROKO, BADBADNOTGOOD, BEACH HOUSE — these keep placeholder tiles. */
+const covers: Record<string, string> = {
+  CARIBOU: "caribou.jpg",
+  "JAMIE XX": "jamiexx.jpg",
+  "FOUR TET": "fourtet.jpg",
+  KHRUANGBIN: "khruangbin.jpg",
+  BONOBO: "bonobo.jpg",
+  "MARIBOU STATE": "mariboustate.jpg",
+  "FLOATING POINTS": "floatingpoints.jpg",
+  "MOUNT KIMBIE": "mountkimbie.jpg",
+  "BARRY CAN'T SWIM": "barycantswim.jpg",
+  BICEP: "bicep.jpg",
+  OVERMONO: "overmono.jpg",
+  TOURIST: "tourist.jpg",
+  "ROSS FROM FRIENDS": "rossfromfriends.jpg",
+  "JOY ORBISON": "joyorbison.jpg",
+  "DJ SEINFELD": "djseinfeld.jpg",
+  VEGYN: "vegyn.jpg",
+  TSHA: "tsha.jpg",
+  ROMY: "romy.jpg",
+  TYCHO: "tycho.jpg",
+  BIBIO: "bibio.jpg",
+  "GOLD PANDA": "goldpanda.jpg",
+  "NICOLAS JAAR": "nikolasjaar.jpg",
+  MODERAT: "moderat.jpg",
+  "ALFA MIST": "alphamist.jpg",
+  "EZRA COLLECTIVE": "ezracollective.jpg",
+  "TOM MISCH": "tommisch.jpg",
+  "JORDAN RAKEI": "jordanrakei.jpg",
+  SAULT: "sault.jpg",
+  "MEN I TRUST": "menitrust.jpg",
+  "THE XX": "thexx.jpg",
+  "THE SMITHS": "thesmiths.jpg",
+  "LCD SOUNDSYSTEM": "lcdsoundsystem.jpg",
+  "TALKING HEADS": "talkingheads.jpg",
+  "LITTLE SIMZ": "littlesimz.jpg",
+  "LOYLE CARNER": "loylecarner.jpg",
+  NUJABES: "nujabes.jpg",
+  "BON IVER": "boniver.jpg",
+  "NICK DRAKE": "nickdrake.jpg",
+  "JOSÉ GONZÁLEZ": "josegonzalez.jpg",
+};
 
 const rows: { titles: string[]; direction: "ltr" | "rtl"; duration: number }[] = [
   {
@@ -103,6 +147,9 @@ function MarqueeRow({
       >
         {doubled.map((title, i) => {
           const albumNo = ((rowIndex * 6 + (i % titles.length)) % 16) + 1;
+          const cover = covers[title]
+            ? `/images/albums/${covers[title]}`
+            : `/images/albums/album-${albumNo}.svg`;
           return (
             <li
               key={`${title}-${i}`}
@@ -112,10 +159,10 @@ function MarqueeRow({
               <span className="whitespace-nowrap font-serif text-xl italic leading-snug text-brand sm:text-3xl">
                 {title},
               </span>
-              {/* Generated placeholder cover — bounces in above the title */}
+              {/* Album cover (or placeholder) — bounces in above the title */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/images/albums/album-${albumNo}.svg`}
+                src={cover}
                 alt=""
                 width={112}
                 height={112}
@@ -166,9 +213,10 @@ export default function PlaylistMarquee() {
           href={SPOTIFY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block border border-brand/50 px-6 py-3 text-xs font-medium tracking-[0.2em] text-brand transition-colors hover:bg-brand hover:text-white"
+          className="playlist-btn inline-block border border-brand/50 px-6 py-3 text-xs font-medium tracking-[0.2em] text-brand"
         >
-          LISTEN TO PLAYLIST
+          <span className="playlist-btn-label">The pause. playlist</span>
+          <span className="playlist-btn-hover">Listen now</span>
         </a>
       </div>
     </section>

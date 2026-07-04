@@ -3,18 +3,17 @@
   <!-- Generator: Adobe Illustrator 30.6.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 109)  -->
   <defs>
     <style>
+      /* The outline is the .st0 path's own closed band shape, painted solid
+         brand blue — not a stroke. fill:none here made it read as a
+         see-through gap against the blue card. */
       .st0 {
-        fill: none;
-      }
-
-      .st0, .st1 {
-        stroke: #0000ba;
-        stroke-miterlimit: 10;
-        stroke-width: 3px;
+        fill: #0000ba;
+        stroke: none;
       }
 
       .st1 {
         fill: #fff;
+        stroke: none;
       }
     </style>
   </defs>

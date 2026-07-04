@@ -11,7 +11,7 @@ export default function Footer() {
           height={40}
         />
 
-        <div className="space-y-2 text-sm leading-relaxed text-brand/80">
+        <div className="space-y-0.5 text-sm leading-snug text-brand/80">
           <p>56 Poplar Rd, King&apos;s Heath, Birmingham B14 7AG</p>
           <p>Mon-Fri 8am-4pm · Sat &amp; Sun 9am-3pm</p>
         </div>

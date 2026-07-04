@@ -10,7 +10,8 @@ type WeatherState =
   | "snow"
   | "windy"
   | "fog"
-  | "storm";
+  | "storm"
+  | "evening";
 
 const WEATHER_STATES: WeatherState[] = [
   "sun",
@@ -20,7 +21,18 @@ const WEATHER_STATES: WeatherState[] = [
   "windy",
   "fog",
   "storm",
+  "evening",
 ];
+
+/**
+ * Evening trumps the weather: from 6pm GMT until 6am GMT the widget shows
+ * the moon instead of conditions. (Deliberately GMT per the brief — switch
+ * to Europe/London if it should track UK local time in summer.)
+ */
+function isEvening(): boolean {
+  const hour = new Date().getUTCHours();
+  return hour >= 18 || hour < 6;
+}
 
 /* Lowercase "pause." matches the brand wordmark */
 const weatherCopy: Record<WeatherState, string> = {
@@ -31,7 +43,15 @@ const weatherCopy: Record<WeatherState, string> = {
   windy: "pause. out of the wind",
   fog: "pause. till it clears",
   storm: "pause. until it passes",
+  evening: "pause. for evening",
 };
+
+/**
+ * TEMPORARY REVIEW OVERRIDE: forces the widget into this state, beating the
+ * clock, the live weather, and ?weather= params. Set back to null to restore
+ * normal behaviour.
+ */
+const FORCE_STATE: WeatherState | null = "rain";
 
 /** Above this wind speed a calm/cloudy day reads as "windy" instead. */
 const WINDY_THRESHOLD_KMH = 30;
@@ -59,14 +79,22 @@ function CoffeeIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.4"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
     >
       <path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" />
       <path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2" />
-      <path d="M8 5.5v1M12 5.5v1" />
+      {/* Steam wisps rise and fade on a staggered loop */}
+      <path
+        d="M8 6.5V5"
+        style={{ animation: "pause-steam 2.2s ease-in-out infinite" }}
+      />
+      <path
+        d="M12 6.5V5"
+        style={{ animation: "pause-steam 2.2s ease-in-out infinite 0.7s" }}
+      />
     </svg>
   );
 }
@@ -79,7 +107,7 @@ function CakeIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.4"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
@@ -98,7 +126,7 @@ function HeartIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.4"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
@@ -113,16 +141,45 @@ function HeartIcon() {
  * Wiring them to a real source is an open item in source/site-brief.md.
  */
 const stats = [
-  { label: "Coffees served this week", value: 256, Icon: CoffeeIcon },
-  { label: "Bakes created", value: 132, Icon: CakeIcon },
+  {
+    /* Animation lives inside the icon itself — rising steam wisps */
+    label: "Coffees served this week",
+    value: 256,
+    Icon: CoffeeIcon,
+    anim: undefined,
+  },
+  {
+    label: "Bakes created",
+    value: 132,
+    Icon: CakeIcon,
+    anim: "pause-icon-bob 1.8s ease-in-out infinite",
+  },
   {
     label: "People who stayed longer than planned",
     value: "Unknown",
     Icon: HeartIcon,
+    anim: "pause-heartbeat 1.4s ease-in-out infinite",
   },
 ];
 
 function WeatherAnimation({ state }: { state: WeatherState }) {
+  if (state === "evening") {
+    /* Moon gently floating and tilting — inline SVG in currentColor so it
+       reads on the solid-brand card and flips with the inverted theme */
+    return (
+      <div className="flex h-28 items-center">
+        <svg
+          viewBox="0 0 329.65 330.98"
+          fill="currentColor"
+          aria-hidden
+          className="w-24 sm:w-28"
+          style={{ animation: "pause-moon 6s ease-in-out infinite" }}
+        >
+          <path d="M298,204.99c-92.23,0-167-74.77-167-167,0-13.07,1.5-25.79,4.34-37.99C58.25,14.79,0,82.58,0,163.99c0,92.23,74.77,167,167,167,79.16,0,145.45-55.08,162.65-129-10.25,1.97-20.83,3.01-31.65,3.01Z" />
+        </svg>
+      </div>
+    );
+  }
   if (state === "sun") {
     /* Soft pulsing circle */
     return (
@@ -284,18 +341,18 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
   }
   /* Cloudy: brand clouds SVG with the blue "sun" dot bobbing behind it */
   return (
-    <div className="relative h-24 w-44">
+    <div className="relative h-32 w-56">
       {/* top-0 anchors the crown, so growing the dot expands it down behind
           the clouds rather than higher above them */}
       <span
-        className="absolute right-5 top-0 size-18 rounded-full bg-current"
+        className="absolute right-7 top-0 size-24 rounded-full bg-current"
         style={{ animation: "pause-bob 3.2s ease-in-out infinite" }}
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/weather-clouds.svg"
         alt=""
-        className="absolute bottom-0 left-0 w-36"
+        className="absolute bottom-0 left-0 w-48"
         style={{ animation: "pause-drift 7s ease-in-out infinite" }}
       />
     </div>
@@ -337,6 +394,7 @@ function CountUpNumber({ value }: { value: number }) {
 export default function WeatherAndCounter() {
   /* Default to the neutral state until (or unless) the fetch resolves. */
   const [state, setState] = useState<WeatherState>(() => {
+    if (FORCE_STATE) return FORCE_STATE;
     if (typeof window === "undefined") return "cloudy";
     const override = new URLSearchParams(window.location.search).get("weather");
     if (WEATHER_STATES.includes(override as WeatherState)) {
@@ -349,9 +407,15 @@ export default function WeatherAndCounter() {
   useEffect(() => {
     /* Preview override: ?weather=sun|rain|cloudy|snow|windy|fog|storm */
     const override = new URLSearchParams(window.location.search).get("weather");
-    const hasOverride = WEATHER_STATES.includes(override as WeatherState);
+    const hasOverride =
+      FORCE_STATE !== null || WEATHER_STATES.includes(override as WeatherState);
 
-    /* Open-Meteo, free + keyless. Coordinates: Kings Heath, Birmingham. */
+    /* After hours the moon wins regardless of conditions */
+    const evening = !hasOverride && isEvening();
+    if (evening) setState("evening");
+
+    /* Open-Meteo, free + keyless. Coordinates: Kings Heath, Birmingham.
+       Still fetched in the evening — the temperature stays live. */
     fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=52.4368&longitude=-1.8923&current=weather_code,temperature_2m,wind_speed_10m",
     )
@@ -359,7 +423,7 @@ export default function WeatherAndCounter() {
       .then((data) => {
         const code = data?.current?.weather_code;
         const wind = data?.current?.wind_speed_10m;
-        if (typeof code === "number" && !hasOverride)
+        if (typeof code === "number" && !hasOverride && !evening)
           setState(stateFromConditions(code, typeof wind === "number" ? wind : 0));
         const temp = data?.current?.temperature_2m;
         if (typeof temp === "number") setTemperature(temp);
@@ -387,18 +451,21 @@ export default function WeatherAndCounter() {
         </div>
 
         {/* Pause Counter — placeholder numbers, see comment above */}
-        <div className="border border-brand/15 p-8 sm:p-10">
+        <div className="border-4 border-brand p-8 sm:p-10">
           <h2 className="text-2xl font-medium text-brand sm:text-2xl">
             Pause Counter
           </h2>
           <ul className="mt-8 space-y-5">
-            {stats.map(({ label, value, Icon }) => (
+            {stats.map(({ label, value, Icon, anim }) => (
               <li
                 key={label}
                 className="flex items-center justify-between gap-6 border-b border-brand/10 pb-4 last:border-b-0"
               >
                 <span className="flex items-center gap-3 text-[1.0625rem] text-brand/80 sm:text-lg">
-                  <span className="shrink-0 text-brand">
+                  <span
+                    className="shrink-0 text-brand motion-reduce:animate-none"
+                    style={{ animation: anim }}
+                  >
                     <Icon />
                   </span>
                   {label}

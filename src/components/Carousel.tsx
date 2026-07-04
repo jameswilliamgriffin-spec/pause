@@ -159,6 +159,10 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
                     aria-hidden
                     className="absolute inset-0 bg-brand/20 mix-blend-multiply"
                   />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 border-[6px] border-brand opacity-0 transition-opacity duration-[var(--pause-duration)] ease-[var(--pause-ease)] group-hover:opacity-100"
+                  />
                 </>
               ) : (
                 /* Placeholder until a matching photo is available */
@@ -185,8 +189,10 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
                 <span aria-hidden>→</span>
               </button>
             </div>
-            <h3 className="mt-4 text-lg font-medium text-brand">{item.title}</h3>
-            <p className="mt-1 max-w-[36ch] text-sm leading-relaxed text-brand sm:text-base">
+            <h3 className="mt-3 text-lg font-medium leading-tight text-brand">
+              {item.title}
+            </h3>
+            <p className="mt-0.5 max-w-[36ch] text-sm leading-snug text-brand sm:text-base">
               {item.description}
             </p>
           </li>
