@@ -51,7 +51,7 @@ const weatherCopy: Record<WeatherState, string> = {
  * clock, the live weather, and ?weather= params. Set back to null to restore
  * normal behaviour.
  */
-const FORCE_STATE: WeatherState | null = "rain";
+const FORCE_STATE: WeatherState | null = null;
 
 /** Above this wind speed a calm/cloudy day reads as "windy" instead. */
 const WINDY_THRESHOLD_KMH = 30;
