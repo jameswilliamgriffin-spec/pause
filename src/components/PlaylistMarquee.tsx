@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SweepButton from "@/components/SweepButton";
 
 /**
  * "pause. PLAYLIST" marquee — its own section above VISIT: blue on white.
@@ -209,15 +210,12 @@ export default function PlaylistMarquee() {
       </div>
 
       <div className="mt-8 text-center sm:mt-10">
-        <a
+        <SweepButton
           href={SPOTIFY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="playlist-btn inline-block border border-brand/50 px-6 py-3 text-xs font-medium tracking-[0.2em] text-brand"
-        >
-          <span className="playlist-btn-label">The pause. playlist</span>
-          <span className="playlist-btn-hover">Listen now</span>
-        </a>
+          label="The pause. playlist"
+          hoverLabel="Listen now"
+          external
+        />
       </div>
     </section>
   );

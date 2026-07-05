@@ -1,58 +1,54 @@
 import Carousel, { type CarouselItem } from "@/components/Carousel";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
+import SweepButton from "@/components/SweepButton";
 
 /**
- * COFFEE — heading + intro, then the shared carousel. No prices (per brief).
- * Copy is drafted in source/site-brief.md — not final.
+ * COFFEE — heading + intro + link to /coffee, then the shared carousel
+ * telling the bean-to-pause story in five parts. No prices (per brief).
  *
- * Items are ordered so the two real photos land on the large tiles;
- * Filter Coffee and Matcha get placeholder tiles until photos exist.
+ * The Roast has no matching photo yet (needs a roastery/beans shot) and
+ * renders the branded placeholder tile until one exists.
  */
 const items: CarouselItem[] = [
   {
-    title: "Flat White",
-    description: "A classic, done properly.",
-    image: {
-      src: "/images/coffee-milk-pour.jpg",
-      alt: "A barista pouring steamed milk into a flat white",
-    },
-  },
-  {
-    title: "Filter Coffee",
-    description: (
-      <>
-        Rotating single-origin beans from our
-        <br />
-        featured roasters.
-      </>
-    ),
+    title: "The Bean",
+    description:
+      "Sourced from some of the UK's best speciality roasters — Fire & Flow, Hundred House, Crankhouse, Cloud Picker, River City Roasters.",
     image: {
       src: "/images/coffee-espresso-pour.jpg",
-      alt: "Coffee pouring into a blue splatter cup on the machine",
+      alt: "Fresh coffee pouring into a blue splatter cup on the machine",
     },
   },
   {
-    title: "Seasonal Special",
-    description: "Something new, worth trying.",
+    title: "The Roast",
+    description:
+      "Roasted in small batches, by people who take it as seriously as we do.",
+  },
+  {
+    title: "The Craft",
+    description:
+      "Behind the machine, Rory brings years of knowledge to every single cup.",
+    image: {
+      src: "/images/coffee-milk-pour.jpg",
+      alt: "Rory pouring steamed milk into a flat white",
+    },
+  },
+  {
+    title: "The Cup",
+    description:
+      "Flat white, filter, or something a little different — carefully prepared, every time.",
+    image: {
+      src: "/images/coffee-splatter-cup.jpg",
+      alt: "A finished flat white with latte art in a blue splatter cup",
+    },
+  },
+  {
+    title: "The Pause",
+    description:
+      "Because a good coffee deserves a moment to actually enjoy it.",
     image: {
       src: "/images/coffee-pause-cups.jpg",
       alt: "Stacks of lilac and pink pause. takeaway cups on the espresso machine",
-    },
-  },
-  {
-    title: "Matcha",
-    description: "Smooth, earthy, and a little different.",
-    image: {
-      src: "/images/coffee-matcha.jpg",
-      alt: "An iced matcha in a glass, layered green over milk",
-    },
-  },
-  {
-    title: "Cortado",
-    description: "Small, smooth, just right.",
-    image: {
-      src: "/images/coffee-splatter-cup.jpg",
-      alt: "A cortado with latte art in a blue splatter cup",
     },
   },
 ];
@@ -75,6 +71,13 @@ export default function Coffee() {
             different — every cup is carefully prepared, alongside hot chocolates,
             matcha, teas and seasonal specials.
           </p>
+          <div className="mt-8">
+            <SweepButton
+              href="/coffee"
+              label="Our coffee in full"
+              hoverLabel="Dive in"
+            />
+          </div>
         </RevealItem>
         <RevealItem className="mt-12 sm:mt-16">
           <Carousel items={items} />

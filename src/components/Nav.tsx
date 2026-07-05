@@ -6,18 +6,21 @@ import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
-  { href: "#about", label: "about." },
-  { href: "#coffee", label: "coffee." },
-  { href: "#baked", label: "baked." },
-  { href: "#visit", label: "visit." },
+  { href: "/#about", label: "about." },
+  { href: "/#coffee", label: "coffee." },
+  { href: "/#baked", label: "baked." },
+  { href: "/#visit", label: "visit." },
 ];
 
-export default function Nav() {
-  /* Transparent over the hero; white bar + blue branding once scrolled. */
-  const [scrolled, setScrolled] = useState(false);
+export default function Nav({ solid = false }: { solid?: boolean }) {
+  /* Transparent over the hero; white bar + blue branding once scrolled.
+     Pages without a dark hero (e.g. /coffee) pass solid to skip the
+     transparent state entirely. */
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const scrolled = solid || hasScrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setHasScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -37,7 +40,7 @@ export default function Nav() {
         }`}
       >
         <Link
-          href="#top"
+          href="/#top"
           aria-label="Pause — back to top"
           className="flex items-center"
         >
