@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import PauseBadge from "@/components/PauseBadge";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
 import Section from "@/components/Section";
 import Sprinkles from "@/components/Sprinkles";
@@ -53,6 +54,9 @@ export default function About() {
           <p className="mx-auto max-w-2xl text-balance text-[1.0625rem] leading-relaxed text-brand sm:text-lg">
             {owners}
           </p>
+        </RevealItem>
+        <RevealItem className="flex justify-center pt-4 sm:pt-6">
+          <PauseBadge />
         </RevealItem>
       </RevealGroup>
     </Section>
