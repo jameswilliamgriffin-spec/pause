@@ -20,9 +20,14 @@ const items: CarouselItem[] = [
     },
   },
   {
+    /* Stand-in photo — swap for a roastery/beans shot when one exists */
     title: "The Roast",
     description:
       "Roasted in small batches, by people who take it as seriously as we do.",
+    image: {
+      src: "/images/coffee-latte-top.jpg",
+      alt: "A latte with rosetta art from above, on a speckled table",
+    },
   },
   {
     title: "The Craft",
