@@ -167,12 +167,12 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
     /* Moon gently floating and tilting — inline SVG in currentColor so it
        reads on the solid-brand card and flips with the inverted theme */
     return (
-      <div className="flex h-28 items-center">
+      <div className="flex h-24 items-center">
         <svg
           viewBox="0 0 329.65 330.98"
           fill="currentColor"
           aria-hidden
-          className="w-24 sm:w-28"
+          className="w-16 sm:w-20"
           style={{ animation: "pause-moon 6s ease-in-out infinite" }}
         >
           <path d="M298,204.99c-92.23,0-167-74.77-167-167,0-13.07,1.5-25.79,4.34-37.99C58.25,14.79,0,82.58,0,163.99c0,92.23,74.77,167,167,167,79.16,0,145.45-55.08,162.65-129-10.25,1.97-20.83,3.01-31.65,3.01Z" />
@@ -341,18 +341,18 @@ function WeatherAnimation({ state }: { state: WeatherState }) {
   }
   /* Cloudy: brand clouds SVG with the blue "sun" dot bobbing behind it */
   return (
-    <div className="relative h-32 w-56">
+    <div className="relative h-24 w-44">
       {/* top-0 anchors the crown, so growing the dot expands it down behind
           the clouds rather than higher above them */}
       <span
-        className="absolute right-7 top-0 size-24 rounded-full bg-current"
+        className="absolute right-5 top-0 size-18 rounded-full bg-current"
         style={{ animation: "pause-bob 3.2s ease-in-out infinite" }}
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/weather-clouds.svg"
         alt=""
-        className="absolute bottom-0 left-0 w-48"
+        className="absolute bottom-0 left-0 w-36"
         style={{ animation: "pause-drift 7s ease-in-out infinite" }}
       />
     </div>
