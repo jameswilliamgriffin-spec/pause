@@ -50,6 +50,12 @@
   animation: pause-wave 780ms var(--pause-ease) both;
 }
 
+@media (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .pause-wave-hand {
+    animation: pause-wave 3.4s var(--pause-ease) infinite;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
