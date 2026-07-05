@@ -19,8 +19,11 @@ export default function PauseBadge() {
           className="fill-brand"
           style={{ fontSize: "13.5px", letterSpacing: "0.16em" }}
         >
-          <textPath href="#pause-badge-circle" textLength="500">
-            take a pause. in your day • take a pause. in your day •
+          {/* NBSPs around the bullets keep the loop join spacing symmetric —
+              a plain trailing space collapses and crowds the "t" against
+              the final bullet. textLength = circle circumference (2π·80). */}
+          <textPath href="#pause-badge-circle" textLength="502">
+            {"take a pause. in your day • take a pause. in your day • "}
           </textPath>
         </text>
       </svg>

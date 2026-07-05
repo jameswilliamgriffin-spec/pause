@@ -44,6 +44,31 @@ function MailIcon() {
   );
 }
 
+function WavingHandIcon() {
+  return (
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className="pause-wave-hand shrink-0"
+    >
+      <path d="M7.8 11.2 6.1 8.3a1.55 1.55 0 0 1 .55-2.12 1.55 1.55 0 0 1 2.12.55l1.18 2.05" />
+      <path d="m10 8.9-2.2-3.82a1.55 1.55 0 0 1 .55-2.12 1.55 1.55 0 0 1 2.12.55l2.08 3.6" />
+      <path d="m12.55 7.12-1.2-2.08a1.55 1.55 0 0 1 .55-2.12 1.55 1.55 0 0 1 2.12.55l2.2 3.82" />
+      <path d="m16.2 7.26-.46-.8a1.55 1.55 0 0 1 .55-2.12 1.55 1.55 0 0 1 2.12.55l1.78 3.08a7.1 7.1 0 0 1-12.3 7.1l-2.35-4.08" />
+      <path d="M3.8 4.4 2.5 3.1" />
+      <path d="M4.8 2.6 4.4.9" />
+      <path d="M2.6 6.2.9 5.8" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="relative bg-white text-brand">
@@ -60,8 +85,9 @@ export default function Footer() {
 
           {/* Say hello */}
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand/70">
+            <p className="pause-wave-trigger flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-brand/70">
               Say hello
+              <WavingHandIcon />
             </p>
             <a
               href="https://www.instagram.com/pausebirmingham"

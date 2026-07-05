@@ -41,6 +41,15 @@
   opacity: 0.07;
 }
 
+.pause-wave-hand {
+  transform-box: fill-box;
+  transform-origin: 70% 75%;
+}
+
+.pause-wave-trigger:hover .pause-wave-hand {
+  animation: pause-wave 780ms var(--pause-ease) both;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -168,11 +177,43 @@ body {
   .pause-badge-ring {
     animation: none;
   }
+
+  .pause-wave-hand {
+    animation: none;
+  }
 }
 
 @keyframes pause-rotate {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes pause-wave {
+  0%,
+  52%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  8% {
+    transform: rotate(14deg);
+  }
+
+  16% {
+    transform: rotate(-9deg);
+  }
+
+  24% {
+    transform: rotate(11deg);
+  }
+
+  32% {
+    transform: rotate(-6deg);
+  }
+
+  40% {
+    transform: rotate(4deg);
   }
 }
 
