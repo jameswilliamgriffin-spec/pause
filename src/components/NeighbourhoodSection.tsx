@@ -3,6 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+import SweepButton from "@/components/SweepButton";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -107,6 +108,26 @@ export default function NeighbourhoodSection() {
               />
             ))}
           </div>
+
+          <motion.div
+            className="mt-8"
+            variants={{
+              hidden: { opacity: 0, y: 14 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.66, ease: EASE },
+              },
+            }}
+          >
+            {/* ABOUT lives on the homepage anchor — repoint if it ever
+                becomes its own page */}
+            <SweepButton
+              href="/#about"
+              label="More about Pause"
+              hoverLabel="Our story"
+            />
+          </motion.div>
         </motion.div>
 
         <motion.div

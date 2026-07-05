@@ -1,5 +1,6 @@
 import BakedCarousel, { type BakedItem } from "@/components/BakedCarousel";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
+import SweepButton from "@/components/SweepButton";
 
 /**
  * BAKED — "Home of the Cinnabuffin." heading + approved body copy, then a
@@ -75,6 +76,13 @@ export default function Baked() {
             baked cakes, brownies, cookies, traybakes, focaccia, cupcakes and
             other homemade treats. Something new to discover most days.
           </p>
+          <div className="mt-8">
+            <SweepButton
+              href="/baked"
+              label="Our bakes in full"
+              hoverLabel="Take a bite"
+            />
+          </div>
         </RevealItem>
         <RevealItem className="mt-10 sm:mt-14">
           <BakedCarousel items={items} />
