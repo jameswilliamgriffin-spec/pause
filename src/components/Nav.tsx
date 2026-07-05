@@ -55,9 +55,10 @@ export default function Nav({ solid = false }: { solid?: boolean }) {
             priority
           />
         </Link>
-        {/* Mobile: links centred in the bar (absolute); desktop: pushed right
-            beside the actions via ml-auto */}
-        <ul className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 sm:static sm:ml-auto sm:mr-10 sm:translate-x-0 sm:translate-y-0 sm:gap-10">
+        {/* Mobile: links centred in the space between logo and actions (a
+            viewport-centred absolute ul collides with the icons at ~375px);
+            desktop: pushed right beside the actions via ml-auto */}
+        <ul className="flex flex-1 items-center justify-center gap-3 px-2 sm:flex-none sm:justify-start sm:gap-10 sm:px-0 sm:ml-auto sm:mr-10">
           {links.map((link) => (
             <li key={link.href}>
               <a

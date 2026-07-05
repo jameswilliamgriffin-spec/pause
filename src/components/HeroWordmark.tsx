@@ -143,7 +143,7 @@ export default function HeroWordmark() {
   return (
     <motion.button
       type="button"
-      className="pointer-events-auto relative aspect-square w-32 appearance-none rounded-full border-0 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-44"
+      className="pointer-events-auto relative aspect-square w-40 appearance-none rounded-full border-0 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-44"
       whileHover={reduceMotion ? undefined : { scale: 1.025 }}
       whileTap={reduceMotion ? undefined : { scale: 0.985 }}
       transition={SURFACE_TRANSITION}

@@ -21,7 +21,7 @@ export default function Hero() {
           <HeroWordmark />
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-          <p className="mx-auto max-w-6xl px-4 pb-8 text-base font-medium leading-snug tracking-tight text-[#fff] sm:px-6 sm:pb-10 sm:text-xl">
+          <p className="mx-auto max-w-6xl px-4 pb-8 text-xl font-medium leading-snug tracking-tight text-[#fff] sm:px-6 sm:pb-10 sm:text-xl">
             Speciality coffee shop
             <br />
             &amp; scratch bakery
