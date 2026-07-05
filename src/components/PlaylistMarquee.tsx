@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import SweepButton from "@/components/SweepButton";
 
 /**
@@ -135,6 +138,7 @@ function MarqueeRow({
   duration: number;
   rowIndex: number;
 }) {
+  const [activeKey, setActiveKey] = useState<string | null>(null);
   /* Content rendered twice for the seamless 50% loop — duplicates are
      hidden from assistive tech. */
   const doubled = [...titles, ...titles];
@@ -147,19 +151,33 @@ function MarqueeRow({
         }}
       >
         {doubled.map((title, i) => {
+          const itemKey = `${title}-${i}`;
           const albumNo = ((rowIndex * 6 + (i % titles.length)) % 16) + 1;
           const cover = covers[title]
             ? `/images/albums/${covers[title]}`
             : `/images/albums/album-${albumNo}.svg`;
           return (
             <li
-              key={`${title}-${i}`}
+              key={itemKey}
               aria-hidden={i >= titles.length}
               className="group relative shrink-0 px-3 sm:px-4"
             >
-              <span className="whitespace-nowrap font-serif text-xl italic leading-snug text-brand sm:text-3xl">
+              <button
+                type="button"
+                tabIndex={i >= titles.length ? -1 : 0}
+                className="whitespace-nowrap font-serif text-xl italic leading-snug text-brand outline-none sm:text-3xl"
+                onPointerDown={(event) => {
+                  if (event.pointerType === "mouse") return;
+                  event.preventDefault();
+                  setActiveKey((current) =>
+                    current === itemKey ? null : itemKey,
+                  );
+                }}
+                onFocus={() => setActiveKey(itemKey)}
+                onBlur={() => setActiveKey(null)}
+              >
                 {title},
-              </span>
+              </button>
               {/* Album cover (or placeholder) — bounces in above the title */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -167,7 +185,9 @@ function MarqueeRow({
                 alt=""
                 width={112}
                 height={112}
-                className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 size-20 opacity-0 shadow-xl group-hover:animate-bounce-in sm:size-24"
+                className={`pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 size-20 opacity-0 shadow-xl group-hover:animate-bounce-in sm:size-24 ${
+                  activeKey === itemKey ? "animate-bounce-in" : ""
+                }`}
                 style={{ transform: "translate(-50%, 14px) scale(0.5)" }}
               />
             </li>
