@@ -77,14 +77,14 @@ export default function Footer() {
       <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid gap-10 sm:grid-cols-3">
           {/* Sign-off */}
-          <div>
+          <div className="order-2 sm:order-1">
             <p className="text-3xl font-medium tracking-tight sm:text-4xl">
               pause. <span className="text-brand/60">take yours.</span>
             </p>
           </div>
 
           {/* Say hello */}
-          <div>
+          <div className="order-3 sm:order-2">
             <p className="pause-wave-trigger flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-brand/70">
               Say hello
               <WavingHandIcon />
@@ -108,7 +108,7 @@ export default function Footer() {
           </div>
 
           {/* Brand */}
-          <div>
+          <div className="order-1 sm:order-3">
             <Image
               src="/images/pause_blue.svg"
               alt="pause."
