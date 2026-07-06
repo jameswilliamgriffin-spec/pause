@@ -49,6 +49,23 @@ export default function NeighbourhoodSection() {
         <div className="size-[34rem] -translate-y-1/2 rounded-full bg-brand opacity-[0.08] sm:size-[42rem] lg:size-[50rem]" />
       </motion.div>
 
+      {/* Shopfront sketch pinned to the viewport's left edge behind the
+          copy — ink-masked (like Sprinkles) so it flips with the theme */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-14 top-1/2 w-[24rem] -translate-y-1/2 opacity-[0.08] sm:w-[32rem] lg:-left-8 lg:w-[42rem]"
+        style={{
+          aspectRatio: "929 / 743",
+          backgroundColor: "var(--pause-ink)",
+          maskImage: 'url("/images/shopfront-sketch.png")',
+          maskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskImage: 'url("/images/shopfront-sketch.png")',
+          WebkitMaskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+        }}
+      />
+
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.45fr_0.55fr] lg:gap-16">
         <motion.div
           initial={prefersReducedMotion ? false : "hidden"}

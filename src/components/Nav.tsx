@@ -26,7 +26,7 @@ export default function Nav({ solid = false }: { solid?: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkColor = scrolled ? "text-brand" : "text-[#fff]";
+  const linkColor = scrolled ? "text-brand" : "pause-hero-nav";
 
   return (
     <header
@@ -42,18 +42,36 @@ export default function Nav({ solid = false }: { solid?: boolean }) {
         <Link
           href="/#top"
           aria-label="Pause — back to top"
-          className="flex items-center"
+          className="group flex items-center"
         >
-          <Image
-            src={scrolled ? "/images/pause_blue.svg" : "/images/pause_white.svg"}
-            alt="pause."
-            width={44}
-            height={44}
-            className={`h-auto transition-[width] duration-500 ease-out ${
+          {/* Hover: the roundel tilts and crossfades into a pause symbol */}
+          <span
+            className={`relative grid aspect-square shrink-0 place-items-center overflow-hidden rounded-full transition-[width,transform] duration-500 ease-out will-change-transform group-hover:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover:rotate-0 ${
               scrolled ? "w-11" : "w-16 sm:w-20"
             }`}
-            priority
-          />
+          >
+            <Image
+              src={scrolled ? "/images/pause_blue.svg" : "/images/pause_white.svg"}
+              alt="pause."
+              fill
+              sizes={scrolled ? "44px" : "(min-width: 640px) 80px, 64px"}
+              className={`object-contain transition-opacity duration-[var(--pause-duration)] ease-[var(--pause-ease)] will-change-opacity group-hover:opacity-0 motion-reduce:transition-none ${
+                scrolled ? "" : "pause-hero-nav-logo"
+              }`}
+              preload
+            />
+            {/* Bars sized to the band the "pause." wordmark occupies in the
+                roundel (~21% of the circle) so the swap feels like-for-like */}
+            <span
+              aria-hidden
+              className={`absolute inset-0 flex items-center justify-center gap-[7%] rounded-full opacity-0 transition-opacity duration-[var(--pause-duration)] ease-[var(--pause-ease)] will-change-opacity group-hover:opacity-100 motion-reduce:transition-none ${
+                scrolled ? "bg-brand text-white" : "pause-hero-nav-pause"
+              }`}
+            >
+              <span className="h-[22%] w-[5.5%] rounded-full bg-current" />
+              <span className="h-[22%] w-[5.5%] rounded-full bg-current" />
+            </span>
+          </span>
         </Link>
         {/* Mobile: links centred in the space between logo and actions (a
             viewport-centred absolute ul collides with the icons at ~375px);

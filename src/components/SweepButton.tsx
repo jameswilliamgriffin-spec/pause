@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 /**
  * Shared fill-sweep button (styles: .playlist-btn rules in globals.css —
@@ -11,18 +12,28 @@ export default function SweepButton({
   href,
   label,
   hoverLabel,
+  icon,
   external = false,
 }: {
   href: string;
   label: string;
   hoverLabel: string;
+  /** Small line icon (16px, currentColor) shown after the label */
+  icon?: ReactNode;
   external?: boolean;
 }) {
   const className =
-    "playlist-btn inline-block border border-brand/50 px-6 py-3 text-xs font-medium tracking-[0.2em] text-brand";
+    "playlist-btn inline-block border border-brand/50 px-6 py-3 text-sm font-bold tracking-tight text-brand";
   const content = (
     <>
-      <span className="playlist-btn-label">{label}</span>
+      <span className="playlist-btn-label">
+        {label}
+        {icon && (
+          <span aria-hidden className="shrink-0">
+            {icon}
+          </span>
+        )}
+      </span>
       <span className="playlist-btn-hover">{hoverLabel}</span>
     </>
   );

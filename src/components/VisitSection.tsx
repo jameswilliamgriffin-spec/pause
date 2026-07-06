@@ -41,7 +41,7 @@ export default function VisitSection() {
       <div
         aria-hidden
         className="absolute inset-0 opacity-20"
-        style={{ backgroundImage: sprinkles, backgroundSize: "160px 160px" }}
+        style={{ backgroundImage: sprinkles, backgroundSize: "240px 240px" }}
       />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col justify-between gap-12 px-4 py-14 sm:px-6 sm:py-16">

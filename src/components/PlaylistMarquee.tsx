@@ -19,6 +19,26 @@ import SweepButton from "@/components/SweepButton";
  */
 const SPOTIFY_URL = "https://open.spotify.com/playlist/REPLACE_WITH_PAUSE_PLAYLIST";
 
+function MusicNoteIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M9 18V5l10-2v13" />
+      <circle cx="6.5" cy="18" r="2.5" />
+      <circle cx="16.5" cy="16" r="2.5" />
+    </svg>
+  );
+}
+
 /* Artist → cover file. Missing (no artwork supplied yet): YUSSEF DAYES,
    KOKOROKO, BADBADNOTGOOD, BEACH HOUSE — these keep placeholder tiles. */
 const covers: Record<string, string> = {
@@ -234,6 +254,7 @@ export default function PlaylistMarquee() {
           href={SPOTIFY_URL}
           label="The pause. playlist"
           hoverLabel="Listen now"
+          icon={<MusicNoteIcon />}
           external
         />
       </div>

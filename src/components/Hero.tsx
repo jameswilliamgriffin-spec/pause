@@ -1,5 +1,6 @@
 import Image from "next/image";
 import HeroWordmark from "@/components/HeroWordmark";
+import Sprinkles from "@/components/Sprinkles";
 
 export default function Hero() {
   return (
@@ -7,15 +8,24 @@ export default function Hero() {
       <section id="top" className="group/hero relative h-[86svh] w-full overflow-hidden">
         {/* Back: hero photo */}
         <Image
-          src="/images/hero-latte-blue-table.jpg"
-          alt="A flat white with latte art on a blue table at Pause"
+          src="/images/e5242952-d019-4215-b82c-6240b3b2d18d.jpg"
+          alt="The Pause shopfront with its blue awnings on a sunny day in Kings Heath"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_20%]"
+          className="object-cover object-[center_90%]"
         />
         {/* Blue overlay — site-wide brand duotone treatment (see site-brief.md) */}
         <div aria-hidden className="absolute inset-0 bg-brand/20 mix-blend-multiply" />
+        {/* Top scrim: the shopfront photo has a pale sky, so the white nav
+            needs a little contrast behind it */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-brand/50 to-transparent sm:h-44"
+        />
+        {/* Packaging sprinkles drifting gently across the photo; fixed white
+            because photography doesn't invert with the theme */}
+        <Sprinkles color="#fff" drift className="opacity-[0.12]" />
         {/* Top: rotating wordmark */}
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <HeroWordmark />

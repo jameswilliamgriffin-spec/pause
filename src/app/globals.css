@@ -33,6 +33,31 @@
   content: url("/images/pause_white.svg");
 }
 
+/* Nav over the hero photo (not scrolled): white in the light theme, brand
+   blue when inverted — the sunny shopfront carries both. Literal colours,
+   not ink/paper vars, because the photo itself doesn't invert. */
+.pause-hero-nav {
+  color: #fff;
+}
+
+[data-theme="inverted"] .pause-hero-nav {
+  color: #0000ba;
+}
+
+[data-theme="inverted"] .pause-hero-nav-logo {
+  content: url("/images/pause_blue.svg");
+}
+
+.pause-hero-nav-pause {
+  background: #fff;
+  color: #0000ba;
+}
+
+[data-theme="inverted"] .pause-hero-nav-pause {
+  background: #0000ba;
+  color: #fff;
+}
+
 .about-sprinkles {
   opacity: 0.05;
 }
@@ -53,6 +78,86 @@
 @media (pointer: coarse) and (prefers-reduced-motion: no-preference) {
   .pause-wave-hand {
     animation: pause-wave 3.4s var(--pause-ease) infinite;
+  }
+}
+
+/* Gentle diagonal drift for Sprinkles layers (drift prop). One 240px
+   tile per cycle so the repeat loops seamlessly (~4px/s). */
+.pause-sprinkle-drift {
+  animation: pause-sprinkle-drift 60s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pause-sprinkle-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-240px, -240px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pause-sprinkle-drift {
+    animation: none;
+  }
+}
+
+/* Steam squiggles on the coffee cup doodle: each path drifts up and fades
+   in a slow loop, staggered so the wisps feel independent. Translate units
+   are SVG user units (viewBox 664 wide). */
+.pause-steam path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: pause-steam 3.4s ease-in-out infinite;
+}
+
+.pause-steam path:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+.pause-steam path:nth-child(3) {
+  animation-delay: 1.4s;
+}
+
+@keyframes pause-steam {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pause-steam path {
+    animation: none;
+  }
+}
+
+/* Idle sway for the muffin doodle (Baked heading) — a slow, slight rock
+   about its base, same easy cadence as the coffee steam. */
+.pause-muffin-sway {
+  transform-origin: 50% 90%;
+  animation: pause-muffin-sway 3.4s ease-in-out infinite;
+}
+
+@keyframes pause-muffin-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pause-muffin-sway {
+    animation: none;
   }
 }
 
@@ -129,7 +234,10 @@ body {
 .playlist-btn .playlist-btn-label {
   position: relative;
   z-index: 10;
-  display: block;
+  /* Flex so an optional leading icon sits inline with the label */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
 }
 

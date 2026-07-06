@@ -9,6 +9,28 @@ import SweepButton from "@/components/SweepButton";
  * Copy notes: tile descriptions besides Cinnabuffin's are drafted here —
  * still draft, swap once approved.
  */
+function MuffinIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {/* Domed top with overhang, pleated case below */}
+      <path d="M4.5 12.5a3.5 3.5 0 0 1-.9-4.9 3.6 3.6 0 0 1 3-1.5 5.6 5.6 0 0 1 10.8 0 3.6 3.6 0 0 1 3 1.5 3.5 3.5 0 0 1-.9 4.9z" />
+      <path d="m5.6 12.5 1.6 7h9.6l1.6-7" />
+      <path d="m9.8 13 .6 6.5" />
+      <path d="m14.2 13-.6 6.5" />
+    </svg>
+  );
+}
+
 const items: BakedItem[] = [
   {
     title: "Cinnabuffin",
@@ -69,6 +91,14 @@ export default function Baked() {
             Home of the
             <br />
             Cinnabuffin.
+            {/* Muffin doodle sized to the type it sits beside (kept in its
+                own pink — it's the bake, not the brand ink) */}
+            <img
+              src="/images/muffin-doodle.svg"
+              alt=""
+              aria-hidden
+              className="pause-muffin-sway ml-[0.18em] inline-block h-[0.9em] w-auto align-[-0.08em]"
+            />
           </h2>
           <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-brand sm:text-lg">
             Made from scratch, by hand, every day — that&apos;s the whole
@@ -81,6 +111,7 @@ export default function Baked() {
               href="/baked"
               label="Our bakes in full"
               hoverLabel="Take a bite"
+              icon={<MuffinIcon />}
             />
           </div>
         </RevealItem>
